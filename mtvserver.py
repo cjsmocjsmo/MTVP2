@@ -5,6 +5,7 @@ import mtvserverutils
 from dotenv import load_dotenv
 
 MTVMEDIA = mtvserverutils.Media()
+load_dotenv()
 
 class CORSMiddleware(tornado.web.RequestHandler):
     def set_default_headers(self):
