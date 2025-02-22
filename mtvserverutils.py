@@ -2,9 +2,11 @@
 
 import os
 import sqlite3
+from dotenv import load_dotenv
 
 class Media:
     def __init__(self):
+        load_dotenv()
         self.conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
         self.cursor = self.conn.cursor()
 
