@@ -52,7 +52,7 @@ class IndexHandler(tornado.web.RequestHandler):
 class ActionHandler(tornado.web.RequestHandler):
     def get(self):
         action_data = MTVMEDIA.action()
-        self.write(action_data)
+        self.write(dict(actiondata=action_data))
 
 class ArnoldHandler(tornado.web.RequestHandler):
     def get(self):
