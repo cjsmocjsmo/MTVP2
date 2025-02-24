@@ -4,7 +4,7 @@ import os
 import mtvserverutils
 import uvicorn
 
-MTVMEDIA = mtvserverutils.MTVMedia()
+MTVMEDIA = mtvserverutils.Media()
 
 app = FastAPI()
 
