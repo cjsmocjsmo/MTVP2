@@ -80,7 +80,7 @@ def action():
     data = cursor.fetchall()
     print(data)
     conn.close()
-    return [{"Name": data.Name, "Year": data.Year, "PosterAddr": data.PosterAddr, "Size": data.Size, "Path": data.Path, "Idx": data.Idx, "MovId": data.MovId, "Catagory": data.Catagory, "HttpThumbPath": data.HttpThumbPath} for data in data]
+    return [{"Name": Name, "Year": Year, "PosterAddr": data.PosterAddr, "Size": data.Size, "Path": data.Path, "Idx": data.Idx, "MovId": data.MovId, "Catagory": data.Catagory, "HttpThumbPath": data.HttpThumbPath} for Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath in data]
 
     
 
