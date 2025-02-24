@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from dotenv import load_dotenv
 import os
 from typing import List
@@ -6,6 +6,8 @@ from pydantic import BaseModel
 import mtvserverutils
 import uvicorn
 import sqlite3
+
+load_dotenv()
 
 MTVMEDIA = mtvserverutils.Media()
 
@@ -76,19 +78,17 @@ def read_root():
 def action():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM movies WHERE catagory='Action' ORDER BY year DESC")
-    Movie = cursor.fetchall()
-    print(Movie)
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Action' ORDER BY Year DESC")
+    movies = cursor.fetchall()
     conn.close()
-    # return [{"Name": Name, "Year": Year, "PosterAddr": PosterAddr, "Size": Size, "Path": Path, "Idx": Idx, "MovId": MovId, "Catagory": Catagory, "HttpThumbPath": HttpThumbPath} for Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath in data]
-
     
+    if not movies:
+        raise HTTPException(status_code=404, detail="No action movies found")
+    
+    return [Movie(Name=movie[0], Year=movie[1], PosterAddr=movie[2], Size=movie[3], Path=movie[4], Idx=movie[5], MovId=movie[6], Catagory=movie[7], HttpThumbPath=movie[8]) for movie in movies]
 
 if __name__ == "__main__":
-    
-    load_dotenv()
-
     host = os.getenv("MTV_RAW_ADDR")
-    port = os.getenv("MTV_SERVER_PORT")
+    port = int(os.getenv("MTV_SERVER_PORT"))
     
     uvicorn.run(app, host=host, port=port)
