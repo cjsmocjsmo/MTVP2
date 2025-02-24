@@ -77,8 +77,8 @@ def action():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM movies WHERE catagory='Action' ORDER BY year DESC")
-    data = cursor.fetchall()
-    print(data)
+    Movie = cursor.fetchall()
+    print(Movie)
     conn.close()
     # return [{"Name": Name, "Year": Year, "PosterAddr": PosterAddr, "Size": Size, "Path": Path, "Idx": Idx, "MovId": MovId, "Catagory": Catagory, "HttpThumbPath": HttpThumbPath} for Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath in data]
 
