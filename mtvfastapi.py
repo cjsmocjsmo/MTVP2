@@ -78,6 +78,7 @@ def action():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM movies WHERE catagory='Action' ORDER BY year DESC")
     data = cursor.fetchall()
+    print(data)
     conn.close()
     return [{"Name": data.Name, "Year": data.Year, "PosterAddr": data.PosterAddr, "Size": data.Size, "Path": data.Path, "Idx": data.Idx, "MovId": data.MovId, "Catagory": data.Catagory, "HttpThumbPath": data.HttpThumbPath} for data in data]
 
