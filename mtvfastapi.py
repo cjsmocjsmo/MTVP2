@@ -87,6 +87,71 @@ def action():
     
     return [Movie(Name=movie[0], Year=movie[1], PosterAddr=movie[2], Size=movie[3], Path=movie[4], Idx=movie[5], MovId=movie[6], Catagory=movie[7], HttpThumbPath=movie[8]) for movie in movies]
 
+@app.get("/arnold", response_model=List[Movie])
+def arnold():
+    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Arnold' ORDER BY Year DESC")
+    movies = cursor.fetchall()
+    conn.close()
+    
+    if not movies:
+        raise HTTPException(status_code=404, detail="No Arnold movies found")
+    
+    return [Movie(Name=movie[0], Year=movie[1], PosterAddr=movie[2], Size=movie[3], Path=movie[4], Idx=movie[5], MovId=movie[6], Catagory=movie[7], HttpThumbPath=movie[8]) for movie in movies]
+
+@app.get("/brucelee", response_model=List[Movie])
+def brucelee():
+    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Bruce Lee' ORDER BY Year DESC")
+    movies = cursor.fetchall()
+    conn.close()
+    
+    if not movies:
+        raise HTTPException(status_code=404, detail="No Bruce Lee movies found")
+    
+    return [Movie(Name=movie[0], Year=movie[1], PosterAddr=movie[2], Size=movie[3], Path=movie[4], Idx=movie[5], MovId=movie[6], Catagory=movie[7], HttpThumbPath=movie[8]) for movie in movies]
+
+@app.get("brucewillis", response_model=List[Movie])
+def brucewillis():
+    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Bruce Willis' ORDER BY Year DESC")
+    movies = cursor.fetchall()
+    conn.close()
+    
+    if not movies:
+        raise HTTPException(status_code=404, detail="No Bruce Willis movies found")
+    
+    return [Movie(Name=movie[0], Year=movie[1], PosterAddr=movie[2], Size=movie[3], Path=movie[4], Idx=movie[5], MovId=movie[6], Catagory=movie[7], HttpThumbPath=movie[8]) for movie in movies]
+
+@app.get("/buzz", response_model=List[Movie])
+def buzz():
+    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Buzz' ORDER BY Year DESC")
+    movies = cursor.fetchall()
+    conn.close()
+    
+    if not movies:
+        raise HTTPException(status_code=404, detail="No Buzz movies found")
+    
+    return [Movie(Name=movie[0], Year=movie[1], PosterAddr=movie[2], Size=movie[3], Path=movie[4], Idx=movie[5], MovId=movie[6], Catagory=movie[7], HttpThumbPath=movie[8]) for movie in movies]
+
+@app.get("/cartoons", response_model=List[Movie])
+def cartoons():
+    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Cartoons' ORDER BY Year DESC")
+    movies = cursor.fetchall()
+    conn.close()
+    
+    if not movies:
+        raise HTTPException(status_code=404, detail="No cartoons found")
+    
+    return [Movie(Name=movie[0], Year=movie[1], PosterAddr=movie[2], Size=movie[3], Path=movie[4], Idx=movie[5], MovId=movie[6], Catagory=movie[7], HttpThumbPath=movie[8]) for movie in movies]
+
 if __name__ == "__main__":
     host = os.getenv("MTV_RAW_ADDR")
     port = int(os.getenv("MTV_SERVER_PORT"))
