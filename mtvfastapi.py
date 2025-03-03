@@ -604,7 +604,7 @@ def therock():
 def tinkerbell():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Tinkerbell' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='TinkerBell' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
 
