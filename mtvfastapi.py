@@ -123,7 +123,7 @@ def arnold():
 def brucelee():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Bruce Lee' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='BruceLee' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
     
@@ -136,7 +136,7 @@ def brucelee():
 def brucewillis():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Bruce Willis' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='BruceWillis' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
     
@@ -175,7 +175,7 @@ def cartoons():
 def charliebrown():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Charlie Brown' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='CharlieBrown' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
     
@@ -279,7 +279,7 @@ def godzilla():
 def harrisonford():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Harrison Ford' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='HarrisonFord' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
     
@@ -292,7 +292,7 @@ def harrisonford():
 def harrypotter():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Harry Potter' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='HarryPotter' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
     
@@ -318,7 +318,7 @@ def hellboy():
 def indianajones():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Indiana Jones' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='IndianaJones' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
     
@@ -331,7 +331,7 @@ def indianajones():
 def jamesbond():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='James Bond' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='JamesBond' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
     
@@ -344,7 +344,7 @@ def jamesbond():
 def johnwayne():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='John Wayne' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='JohnWayne' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
     
@@ -357,7 +357,7 @@ def johnwayne():
 def johnwick():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='John Wick' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='JohnWick' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
     
@@ -370,7 +370,7 @@ def johnwick():
 def jurassicpark():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Jurassic Park' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='JurassicPark' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
     
@@ -383,7 +383,7 @@ def jurassicpark():
 def kevincostner():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Kevin Costner' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='KevinCostner' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
     
@@ -461,7 +461,7 @@ def misc():
 def nicolascage():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Nicolas Cage' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='NicolasCage' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
 
@@ -552,7 +552,7 @@ def stalone():
 def startrek():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Star Trek' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='StarTrek' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
 
@@ -565,7 +565,7 @@ def startrek():
 def starwars():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Star Wars' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='StarWars' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
 
@@ -591,7 +591,7 @@ def superheros():
 def therock():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='The Rock' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='TheRock' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
 
@@ -617,7 +617,7 @@ def tinkerbell():
 def tomcruise():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Tom Cruise' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='TomCruise' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
 
