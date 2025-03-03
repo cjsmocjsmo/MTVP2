@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os
 from typing import List
@@ -12,6 +13,14 @@ load_dotenv()
 MTVMEDIA = mtvserverutils.Media()
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 def init_db():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
