@@ -617,7 +617,7 @@ def tinkerbell():
 def tomcruise():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='TomCruise' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='TomCruize' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
 
