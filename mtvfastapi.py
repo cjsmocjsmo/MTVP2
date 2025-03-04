@@ -305,7 +305,7 @@ def harrypotter():
 def hellboy():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='Hellboy' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='HellBoy' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
     
@@ -366,11 +366,11 @@ def johnwick():
     
     return [Movie(Name=movie[0], Year=movie[1], PosterAddr=movie[2], Size=movie[3], Path=movie[4], Idx=movie[5], MovId=movie[6], Catagory=movie[7], HttpThumbPath=movie[8]) for movie in movies]
 
-@app.get("/jurassicpark", response_model=List[Movie])
-def jurassicpark():
+@app.get("/jurrasicpark", response_model=List[Movie])
+def jurrasicpark():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='JurassicPark' ORDER BY Year DESC")
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='JurrasicPark' ORDER BY Year DESC")
     movies = cursor.fetchall()
     conn.close()
     
