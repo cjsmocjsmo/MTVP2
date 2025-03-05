@@ -61,9 +61,19 @@ def setup():
                 "run",
                 "-d",
                 "-v",
-                "/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro",
+                "/usr/share/MTV2/thumbnails:/usr/share/nginx/html:ro",
                 "-p",
-                "9999:80",
+                "9000:80",
+                "arm32v7/nginx:bookworm"
+            ])
+            subprocess.run([
+                "docker",
+                "run",
+                "-d",
+                "-v",
+                "/usr/share/MTV2/tvthumbnails:/usr/share/nginx/html:ro",
+                "-p",
+                "9090:80",
                 "arm32v7/nginx:bookworm"
             ])
         elif utils.get_arch() == "64":
@@ -72,9 +82,19 @@ def setup():
                 "run",
                 "-d",
                 "-v",
-                "/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro",
+                "/usr/share/MTV2/thumbnails:/usr/share/nginx/html:ro",
                 "-p",
-                "9999:80",
+                "9000:80",
+                "nginx:bookworm"
+            ])
+            subprocess.run([
+                "docker",
+                "run",
+                "-d",
+                "-v",
+                "/usr/share/MTV2/tvthumbnails:/usr/share/nginx/html:ro",
+                "-p",
+                "9090:80",
                 "nginx:bookworm"
             ])
         host = os.getenv("MTV_RAW_ADDR")
