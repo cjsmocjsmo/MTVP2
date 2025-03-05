@@ -49,6 +49,18 @@ class CreateTables:
             HttpThumbPath TEXT NOT NULL
          )""")
         
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS tvimages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ImgId TEXT NOT NULL,
+            Path TEXT NOT NULL,
+            ImgPath TEXT NOT NULL,
+            Size TEXT NOT NULL,
+            Name TEXT NOT NULL,
+            ThumbPath TEXT NOT NULL,
+            Idx INTEGER NOT NULL,
+            HttpThumbPath TEXT NOT NULL
+         )""")
+        
         self.cursor2.execute("""CREATE TABLE IF NOT EXISTS amount (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             Year TEXT NOT NULL,

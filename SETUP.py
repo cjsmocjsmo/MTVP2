@@ -6,8 +6,8 @@ import subprocess
 from pprint import pprint
 from dotenv import load_dotenv
 import utils
-import asyncio
-import mtvserverasync
+import uvicorn
+from mtvfastapi import app
 
 import docker
 
@@ -77,7 +77,10 @@ def setup():
                 "9999:80",
                 "nginx:bookworm"
             ])
-        asyncio.run(mtvserverasync.servermain())
+        host = os.getenv("MTV_RAW_ADDR")
+        port = os.getenv("MTV_SERVER_PORT")
+        uvicorn.run(app, host=host, port=int(port))
+        # asyncio.run(mtvserverasync.servermain())
         
 
     elif args.update:

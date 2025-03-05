@@ -4,13 +4,13 @@ from dotenv import load_dotenv
 import os
 from typing import List
 from pydantic import BaseModel
-import mtvserverutils
+# import mtvserverutils
 import uvicorn
 import sqlite3
 
 load_dotenv()
 
-MTVMEDIA = mtvserverutils.Media()
+# MTVMEDIA = mtvserverutils.Media()
 
 app = FastAPI()
 

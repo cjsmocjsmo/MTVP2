@@ -22,6 +22,26 @@ def mtv_walk_dirs(directory):
                 medialist.append(fname)
     return medialist
 
+def img_walk_dirs(dir):
+    jpglist = []
+    for root, dirs, files in os.walk(dir):
+        for file in files:
+            fname = os.path.join(root, file)
+            ext = os.path.splitext(fname)[1]
+            if ext == ".jpg":
+                jpglist.append(fname)
+    return jpglist
+
+def tvimg_walk_dirs(dir):
+    webplist = []
+    for root, dirs, files in os.walk(dir):
+        for file in files:
+            fname = os.path.join(root, file)
+            ext = os.path.splitext(fname)[1]
+            if ext == ".webp":
+                webplist.append(fname)
+    return webplist
+
 def movie_count():
     conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
     cursor = conn.cursor()
@@ -162,15 +182,15 @@ def monthly_amount_total(month):
     
     return total_amount
 
-def img_walk_dirs(dir):
-    jpglist = []
-    for root, dirs, files in os.walk(dir):
-        for file in files:
-            fname = os.path.join(root, file)
-            ext = os.path.splitext(fname)[1]
-            if ext == ".jpg":
-                jpglist.append(fname)
-    return jpglist
+# def img_walk_dirs(dir):
+#     jpglist = []
+#     for root, dirs, files in os.walk(dir):
+#         for file in files:
+#             fname = os.path.join(root, file)
+#             ext = os.path.splitext(fname)[1]
+#             if ext == ".jpg":
+#                 jpglist.append(fname)
+#     return jpglist
 
 def sqlite3_check():
     sqlite3 = subprocess.run(["apt-cache", "policy", "sqlite3"])

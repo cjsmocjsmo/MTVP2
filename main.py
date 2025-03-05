@@ -30,6 +30,9 @@ class Main:
             images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
             mtvimages.ProcessImages(images, self.conn, self.cursor).process()
 
+            tvimages = utils.tvimg_walk_dirs(os.getenv("MTV_TVPOSTER_PATH"))
+            mtvimages.ProcessTVImages(tvimages, self.conn, self.cursor).process()
+
             movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
             mtvmovies.ProcessMovies(movs, self.conn, self.cursor).process()
 
