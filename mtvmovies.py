@@ -181,8 +181,8 @@ class ProcessMovies:
     def get_http_thumb_path(self, mov):
         fname = os.path.split(mov)[1]
         server_addr = os.getenv("MTV_SERVER_ADDR")
-        server_port = os.getenv("MTV_SERVER_PORT")
-        # server_port = "9999"
+        # server_port = os.getenv("MTV_SERVER_PORT")
+        server_port = "9000"
         return f"{server_addr}:{server_port}/{fname}"
     
     def get_name(self, mov):

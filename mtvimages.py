@@ -55,8 +55,8 @@ class ProcessImages:
     def get_http_thumb_path(self, img):
         fname = os.path.split(img)[1]
         server_addr = os.getenv("MTV_SERVER_ADDR")
-        server_port = os.getenv("MTV_SERVER_PORT")
-        # server_port = "9999"
+        # server_port = os.getenv("MTV_SERVER_PORT")
+        server_port = "9000"
         return f"{server_addr}:{server_port}/{fname}"
     
     def process(self):
@@ -135,7 +135,7 @@ class ProcessTVImages(ProcessImages):
     def get_tvhttp_thumb_path(self, img):
         fname = os.path.split(img)[1]
         server_addr = os.getenv("MTV_SERVER_ADDR")
-        server_port = os.getenv("MTV_SERVER_PORT")
+        server_port = "9090"
         return f"{server_addr}:{server_port}/{fname}"
     
     def process(self):
