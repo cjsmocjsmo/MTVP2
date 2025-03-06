@@ -1,5 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from dotenv import load_dotenv
 import os
 from typing import List
@@ -14,6 +16,8 @@ load_dotenv()
 
 app = FastAPI()
 
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Allow all origins
@@ -21,6 +25,8 @@ app.add_middleware(
     allow_methods=["*"],  # Allow all methods
     allow_headers=["*"],  # Allow all headers
 )
+
+app.mount("/static", StaticFiles(directory="./frontend"), name="static")
 
 def init_db():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
@@ -91,7 +97,7 @@ def startup():
 
 @app.get("/")
 def read_root():
-    return {"message": "FastApi Hello, World!"}
+    return FileResponse("./frontend/index.html")
 
 @app.get("/action", response_model=List[Movie])
 def action():
@@ -678,7 +684,11 @@ def xmen():
     
     return [Movie(Name=movie[0], Year=movie[1], PosterAddr=movie[2], Size=movie[3], Path=movie[4], Idx=movie[5], MovId=movie[6], Catagory=movie[7], HttpThumbPath=movie[8]) for movie in movies]
 
-
+########################################################################################################################################################################################################
+########################################################################################################################################################################################################
+########################################################################################################################################################################################################
+########################################################################################################################################################################################################
+########################################################################################################################################################################################################
 
 @app.get("/ahsoka", response_model=List[TVShow])
 def ahsoka():
