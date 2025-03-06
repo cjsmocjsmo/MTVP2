@@ -26,7 +26,7 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
-app.mount("/static", StaticFiles(directory="./frontend"), name="static")
+app.mount("/static", StaticFiles(directory="/home/pimedia/MTV2/MTVP2/frontend"), name="static")
 
 def init_db():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
