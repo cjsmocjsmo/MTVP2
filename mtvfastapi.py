@@ -1,32 +1,34 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 from dotenv import load_dotenv
-import os
 from typing import List
 from pydantic import BaseModel
-# import mtvserverutils
+import os
 import uvicorn
 import sqlite3
+import vlc
+
+# Initialize VLC player
+instance = vlc.Instance()
+player = instance.media_player_new()
 
 load_dotenv()
 
-# MTVMEDIA = mtvserverutils.Media()
+def get_media_path_from_media_id(media_id):
+    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
+    cursor = conn.cursor()
+    cursor.execute("SELECT Path FROM movies WHERE MovId=?", (media_id,))
+    path = cursor.fetchone()
+    conn.close()
+    return path[0]
 
-app = FastAPI()
-
-
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
-    allow_credentials=True,
-    allow_methods=["*"],  # Allow all methods
-    allow_headers=["*"],  # Allow all headers
-)
-
-app.mount("/static", StaticFiles(directory="/home/pimedia/MTV2/MTVP2/frontend"), name="static")
+def get_media_path_from_tv_id(tv_id):
+    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
+    cursor = conn.cursor()
+    cursor.execute("SELECT Path FROM tvshows WHERE TvId=?", (tv_id,))
+    path = cursor.fetchone()
+    conn.close()
+    return path[0]
 
 def init_db():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
@@ -70,6 +72,16 @@ def init_db():
     conn.commit()
     conn.close()
 
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+)
+
 class Movie(BaseModel):
     Name: str
     Year: str
@@ -97,7 +109,48 @@ def startup():
 
 @app.get("/")
 def read_root():
-    return FileResponse("./frontend/index.html")
+    return {"Hello": "World"}
+
+@app.get("/player_set_media/{media_id}")
+def set_media(media_id: str):
+    media_path = get_media_path_from_media_id(media_id)
+    player.set_media(vlc.Media(media_path))
+    player.set_fullscreen(True)
+    return {"status": "media set"}
+
+@app.get("/player_set_tv_media/{tvmediaid}")
+def set_tv_media(tvmediaid: str):
+    media_path = get_media_path_from_tv_id(tvmediaid)
+    player.set_media(vlc.Media(media_path))
+    player.set_fullscreen(True)
+    return {"status": "media set"}
+
+@app.get("/player_play")
+def player_play():
+    player.play()
+    return {"status": "playing"}
+
+@app.get("/player_pause")
+def player_pause():
+    player.pause()
+    return {"status": "paused"}
+
+@app.get("/player_stop")
+def player_stop():
+    player.stop()
+    return {"status": "stopped"}
+
+@app.get("/player_previous")
+def player_previous():
+    current_time = player.get_time()
+    player.set_time(current_time - 30000)
+    return {"status": "previous"}
+
+@app.get("/player_next")
+def player_next():
+    current_time = player.get_time()
+    player.set_time(current_time + 30000)
+    return {"status": "next"}
 
 @app.get("/action", response_model=List[Movie])
 def action():
