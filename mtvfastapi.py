@@ -1029,8 +1029,8 @@ def foundation2():
     
     return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
 
-@app.get("/foobar", response_model=List[TVShow])
-def foobar():
+@app.get("/fubar", response_model=List[TVShow])
+def fubar():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
     cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='FuuBar' AND Season='01' ORDER BY Season DESC, Episode DESC")
@@ -1501,7 +1501,7 @@ def nightsky():
 def obiwan():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='Obi Wan' AND Season='01' ORDER BY Season DESC, Episode DESC")
+    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='ObiWanKenobi' AND Season='01' ORDER BY Season DESC, Episode DESC")
     tvshows = cursor.fetchall()
     conn.close()
 
@@ -1697,7 +1697,7 @@ def raisedbywolves2():
 def secretinvasion():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='SecretInvation' AND Season='01' ORDER BY Season DESC, Episode DESC")
+    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='SecretInvasion' AND Season='01' ORDER BY Season DESC, Episode DESC")
     tvshows = cursor.fetchall()
     conn.close()
 
@@ -1762,7 +1762,7 @@ def silo2():
 def theringsofpower():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='TheRingsOfPower' AND Season='01' ORDER BY Season DESC, Episode DESC")
+    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='TheLordOfTheRingsTheRingsOfPower' AND Season='01' ORDER BY Season DESC, Episode DESC")
     tvshows = cursor.fetchall()
     conn.close()
 
