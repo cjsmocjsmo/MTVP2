@@ -1068,7 +1068,7 @@ def forallmankind2():
     
     return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
 
-@app.get("/forallmankind3", response_model=List[TVShow])
+@app.get("/forallmandkind3", response_model=List[TVShow])
 def forallmandkind3():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
@@ -1081,7 +1081,7 @@ def forallmandkind3():
     
     return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
 
-@app.get("/forallmankind4", response_model=List[TVShow])
+@app.get("/forallmandkind4", response_model=List[TVShow])
 def forallmandkind4():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
@@ -1658,7 +1658,7 @@ def strangenewworlds2():
 def talesofthejedi():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='Tales Of The Jedi' AND Season='01' ORDER BY Season DESC, Episode DESC")
+    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='TalesOfTheJedi' AND Season='01' ORDER BY Season DESC, Episode DESC")
     tvshows = cursor.fetchall()
     conn.close()
 
