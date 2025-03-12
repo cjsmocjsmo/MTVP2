@@ -123,6 +123,7 @@ def set_tv_media(tvmediaid: str):
     media_path = get_media_path_from_tv_id(tvmediaid)
     player.set_media(vlc.Media(media_path))
     player.set_fullscreen(True)
+    player.play()
     return {"status": "media set"}
 
 @app.get("/player_play")
@@ -1393,11 +1394,11 @@ def moonknight():
     
     return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
 
-@app.get("/nextgeneration1", response_model=List[TVShow])
-def nextgeneration1():
+@app.get("/TNG1", response_model=List[TVShow])
+def TNG1():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='NextGeneration' AND Season='01' ORDER BY Season DESC, Episode DESC")
+    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='TNG' AND Season='01' ORDER BY Season DESC, Episode DESC")
     tvshows = cursor.fetchall()
     conn.close()
 
@@ -1406,11 +1407,11 @@ def nextgeneration1():
     
     return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
 
-@app.get("/nextgeneration2", response_model=List[TVShow])
-def nextgeneration2():
+@app.get("/TNG2", response_model=List[TVShow])
+def TNG2():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='NextGeneration' AND Season='02' ORDER BY Season DESC, Episode DESC")
+    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='TNG' AND Season='02' ORDER BY Season DESC, Episode DESC")
     tvshows = cursor.fetchall()
     conn.close()
 
@@ -1419,11 +1420,11 @@ def nextgeneration2():
     
     return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
 
-@app.get("/nextgeneration3", response_model=List[TVShow])
-def nextgeneration3():
+@app.get("/TNG3", response_model=List[TVShow])
+def TNG3():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='NextGeneration' AND Season='03' ORDER BY Season DESC, Episode DESC")
+    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='TNG' AND Season='03' ORDER BY Season DESC, Episode DESC")
     tvshows = cursor.fetchall()
     conn.close()
 
@@ -1432,11 +1433,11 @@ def nextgeneration3():
     
     return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
 
-@app.get("/nextgeneration4", response_model=List[TVShow])
-def nextgeneration4():
+@app.get("/TNG4", response_model=List[TVShow])
+def TNG4():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='NextGeneration' AND Season='04' ORDER BY Season DESC, Episode DESC")
+    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='TNG' AND Season='04' ORDER BY Season DESC, Episode DESC")
     tvshows = cursor.fetchall()
     conn.close()
 
@@ -1445,11 +1446,11 @@ def nextgeneration4():
     
     return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
 
-@app.get("/nextgeneration5", response_model=List[TVShow])
-def nextgeneration5():
+@app.get("/TNG5", response_model=List[TVShow])
+def TNG5():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='NextGeneration' AND Season='05' ORDER BY Season DESC, Episode DESC")
+    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='TNG' AND Season='05' ORDER BY Season DESC, Episode DESC")
     tvshows = cursor.fetchall()
     conn.close()
 
@@ -1458,11 +1459,11 @@ def nextgeneration5():
     
     return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
 
-@app.get("/nextgeneration6", response_model=List[TVShow])
-def nextgeneration6():
+@app.get("/TNG6", response_model=List[TVShow])
+def TNG6():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='NextGeneration' AND Season='06' ORDER BY Season DESC, Episode DESC")
+    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='TNG' AND Season='06' ORDER BY Season DESC, Episode DESC")
     tvshows = cursor.fetchall()
     conn.close()
 
@@ -1471,11 +1472,11 @@ def nextgeneration6():
     
     return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
 
-@app.get("/nextgeneration7", response_model=List[TVShow])
-def nextgeneration7():
+@app.get("/TNG7", response_model=List[TVShow])
+def TNG7():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
-    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='NextGeneration' AND Season='07' ORDER BY Season DESC, Episode DESC")
+    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='TNG' AND Season='07' ORDER BY Season DESC, Episode DESC")
     tvshows = cursor.fetchall()
     conn.close()
 
