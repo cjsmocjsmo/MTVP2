@@ -154,6 +154,19 @@ def player_next():
     player.set_time(current_time + 30000)
     return {"status": "next"}
 
+@app.get("/search/{search_term}", response_model=List[Movie])
+def search(search_term: str):
+    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Name LIKE ? ORDER BY Year DESC", ('%' + search_term + '%',))
+    movies = cursor.fetchall()
+    conn.close()
+    
+    if not movies:
+        raise HTTPException(status_code=404, detail="No movies found")
+    
+    return [Movie(Name=movie[0], Year=movie[1], PosterAddr=movie[2], Size=movie[3], Path=movie[4], Idx=movie[5], MovId=movie[6], Catagory=movie[7], HttpThumbPath=movie[8]) for movie in movies]
+
 @app.get("/action", response_model=List[Movie])
 def action():
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
