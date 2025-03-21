@@ -154,7 +154,7 @@ def player_next():
     player.set_time(current_time + 30000)
     return {"status": "next"}
 
-@app.get("/search/{search_term}", response_model=List[Movie])
+@app.get("/movsearch/{search_term}", response_model=List[Movie])
 def search(search_term: str):
     conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
     cursor = conn.cursor()
@@ -166,6 +166,19 @@ def search(search_term: str):
         raise HTTPException(status_code=404, detail="No movies found")
     
     return [Movie(Name=movie[0], Year=movie[1], PosterAddr=movie[2], Size=movie[3], Path=movie[4], Idx=movie[5], MovId=movie[6], Catagory=movie[7], HttpThumbPath=movie[8]) for movie in movies]
+
+@app.get("/tvsearch/{search_term}/{season}", response_model=List[TVShow])
+def tvsearch(search_term: str, season: str):
+    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
+    cursor = conn.cursor()
+    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Name LIKE ? AND Season=? ORDER BY Season, Episode", ('%' + search_term + '%', season))
+    tvshows = cursor.fetchall()
+    conn.close()
+    
+    if not tvshows:
+        raise HTTPException(status_code=404, detail="No TV shows found")
+    
+    return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
 
 @app.get("/action", response_model=List[Movie])
 def action():
