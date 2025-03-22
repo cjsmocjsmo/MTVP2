@@ -1,76 +1,19 @@
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
-from typing import List
-from pydantic import BaseModel
+import mtvtables as MTVTABS
 import os
-import uvicorn
+from pydantic import BaseModel
 import sqlite3
+from typing import List
+import uvicorn
 import vlc
+
+load_dotenv()
 
 # Initialize VLC player
 instance = vlc.Instance()
 player = instance.media_player_new()
-
-load_dotenv()
-
-def get_media_path_from_media_id(media_id):
-    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
-    cursor = conn.cursor()
-    cursor.execute("SELECT Path FROM movies WHERE MovId=?", (media_id,))
-    path = cursor.fetchone()
-    conn.close()
-    return path[0]
-
-def get_media_path_from_tv_id(tv_id):
-    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
-    cursor = conn.cursor()
-    cursor.execute("SELECT Path FROM tvshows WHERE TvId=?", (tv_id,))
-    path = cursor.fetchone()
-    conn.close()
-    return path[0]
-
-def init_db():
-    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
-    cursor = conn.cursor()
-    cursor.execute("""CREATE TABLE IF NOT EXISTS movies (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            Name str,
-            Year str,
-            PosterAddr str,
-            Size str,
-            Path str,
-            Idx str,
-            MovId str UNIQUE,
-            Catagory str,
-            HttpThumbPath str
-        )""")
-    conn.commit()
-    cursor.execute("""CREATE TABLE IF NOT EXISTS tvshows (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            TvId str UNIQUE,
-            Size str,
-            Catagory str,
-            Name str,
-            Season str,
-            Episode str,
-            Path str,
-            Idx str
-         )""")
-    conn.commit()
-    cursor.execute("""CREATE TABLE IF NOT EXISTS images (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            ImgId str,
-            Path str,
-            ImgPath str,
-            Size str,
-            Name str,
-            ThumbPath str,
-            Idx INTEGER NOT NULL,
-            HttpThumbPath str
-         )""")
-    conn.commit()
-    conn.close()
 
 app = FastAPI()
 
@@ -103,9 +46,49 @@ class TVShow(BaseModel):
     Path: str
     Idx: str
 
+def write_pid_file():
+    pid = os.getpid()
+    with open(os.getenv("MTV_PID_FILE"), "w") as f:
+        f.write(str(pid))
+
+def db_file_exists():
+    return os.path.exists(os.getenv("MTV_DB_PATH"))
+
+def mov_db_content_check():
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM movies")
+    movies = cursor.fetchall()
+    conn.close()
+    if len(movies) == 0:
+        return False
+    return True
+
 @app.on_event("startup")
 def startup():
-    init_db()
+    if not db_file_exists():
+        print("DB file does not exist please run 'python3 SETUP.py -i'")
+        exit(1)
+    if not mov_db_content_check():
+        print("DB is empty. Please run 'python3 SETUP.py -i'")
+        exit(1)
+    write_pid_file()
+
+def get_media_path_from_media_id(media_id):
+    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
+    cursor = conn.cursor()
+    cursor.execute("SELECT Path FROM movies WHERE MovId=?", (media_id,))
+    path = cursor.fetchone()
+    conn.close()
+    return path[0]
+
+def get_media_path_from_tv_id(tv_id):
+    conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
+    cursor = conn.cursor()
+    cursor.execute("SELECT Path FROM tvshows WHERE TvId=?", (tv_id,))
+    path = cursor.fetchone()
+    conn.close()
+    return path[0]
 
 @app.get("/")
 def read_root():
@@ -2012,3 +1995,4 @@ if __name__ == "__main__":
     host = os.getenv("MTV_RAW_ADDR")
     port = os.getenv("MTV_SERVER_PORT")
     uvicorn.run(app, host=host, port=int(port))
+    write_pid_file()

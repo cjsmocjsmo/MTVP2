@@ -9,15 +9,17 @@ import utils
 import uvicorn
 from mtvfastapi import app
 
-import docker
+# import docker
 
 CWD = os.getcwd()
 
 def setup():
     parser = argparse.ArgumentParser(description="CLI for Rusic music server.")
-    parser.add_argument("-i", "--install", action="store_true", help="Install the program")
-    parser.add_argument("-u", "--update", action="store_true", help="Update the program")
     parser.add_argument("-d", "--delete", action="store_true", help="Delete the program")
+    parser.add_argument("-i", "--install", action="store_true", help="Install the program")
+    parser.add_argument("-r", "--restart", action="store_true", help="Restart the program")
+    parser.add_argument("-u", "--update", action="store_true", help="Update the program")
+    
 
     args = parser.parse_args()
     
@@ -56,64 +58,140 @@ def setup():
         
         main.Main().main()
         if utils.get_arch() == "32":
-            subprocess.run([
-                "docker",
-                "run",
-                "-d",
-                "-v",
-                "/usr/share/MTV2/thumbnails:/usr/share/nginx/html:ro",
-                "-p",
-                "9000:80",
-                "arm32v7/nginx:bookworm"
-            ])
-            subprocess.run([
-                "docker",
-                "run",
-                "-d",
-                "-v",
-                "/usr/share/MTV2/tvthumbnails:/usr/share/nginx/html:ro",
-                "-p",
-                "9090:80",
-                "arm32v7/nginx:bookworm"
-            ])
+            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch32/thumbnails/"])
+            subprocess.run(["docker", "build", "-t", "thumbnails32:latest", "."])
+            subprocess.run(["docker", "run", "-d", "-p", "9090:80", "thumbnails32:latest"])
+            # subprocess.run([
+            #     "docker",
+            #     "run",
+            #     "-d",
+            #     "-v",
+            #     "/usr/share/MTV22/thumbnails:/usr/share/nginx/html:ro",
+            #     "-p",
+            #     "9000:80",
+            #     "arm32v7/nginx:bookworm"
+            # ])
+            # subprocess.run([
+            #     "docker",
+            #     "run",
+            #     "-d",
+            #     "-v",
+            #     "/usr/share/MTV22/tvthumbnails:/usr/share/nginx/html:ro",
+            #     "-p",
+            #     "9090:80",
+            #     "arm32v7/nginx:bookworm"
+            # ])
+            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch32/tvthumbnails/"])
+            subprocess.run(["docker", "build", "-t", "tvthumbnails32:latest", "."])
+            subprocess.run(["docker", "run", "-d", "-p", "9095:80", "tvthumbnails32:latest"])
         elif utils.get_arch() == "64":
-            subprocess.run([
-                "docker",
-                "run",
-                "-d",
-                "-v",
-                "/usr/share/MTV2/thumbnails:/usr/share/nginx/html:ro",
-                "-p",
-                "9000:80",
-                "nginx:bookworm"
-            ])
-            subprocess.run([
-                "docker",
-                "run",
-                "-d",
-                "-v",
-                "/usr/share/MTV2/tvthumbnails:/usr/share/nginx/html:ro",
-                "-p",
-                "9090:80",
-                "nginx:bookworm"
-            ])
+            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch64/thumbnails/"])
+            subprocess.run(["docker", "build", "-t", "thumbnails64:latest", "."])
+            subprocess.run(["docker", "run", "-d", "-p", "9090:80", "thumbnails64:latest"])
+            # subprocess.run([
+            #     "docker",
+            #     "run",
+            #     "-d",
+            #     "-v",
+            #     "/usr/share/MTV22/thumbnails:/usr/share/nginx/html:ro",
+            #     "-p",
+            #     "9000:80",
+            #     "nginx:bookworm"
+            # ])
+            # subprocess.run([
+            #     "docker",
+            #     "run",
+            #     "-d",
+            #     "-v",
+            #     "/usr/share/MTV22/tvthumbnails:/usr/share/nginx/html:ro",
+            #     "-p",
+            #     "9090:80",
+            #     "nginx:bookworm"
+            # ])
+            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch64/tvthumbnails/"])
+            subprocess.run(["docker", "build", "-t", "tvthumbnails64:latest", "."])
+            subprocess.run(["docker", "run", "-d", "-p", "9095:80", "tvthumbnails64:latest"])
         host = os.getenv("MTV_RAW_ADDR")
         port = os.getenv("MTV_SERVER_PORT")
         uvicorn.run(app, host=host, port=int(port))
         # asyncio.run(mtvserverasync.servermain())
         
+    elif args.restart:
+        pid_path = os.getenv("MTV_PID_PATH")
+        with open(pid_path, "r") as f:
+            pid = f.read()
+        if pid:
+            subprocess.run(["kill", pid])
+
+        db_path = os.getenv("MTV_DB_PATH")
+        if not os.path.exists(db_path):
+            print(f"Database file not found at {db_path}. Please ensure the database is present.\nYou may want to run 'python3 SETUP.py -i'")
+            exit()
+
+        containers = subprocess.run(("docker", "ps", "-aq"))
+        if len(containers) == 0:
+            print("No containers found. Please run 'python3 SETUP.py -i'.")
+            exit()
+        else:
+            for container in containers:
+                subprocess.run(("docker", "start", container))
+        
+        main.Main().main()
+        host = os.getenv("MTV_RAW_ADDR")
+        port = os.getenv("MTV_SERVER_PORT")
+        uvicorn.run(app, host=host, port=int(port))
 
     elif args.update:
-        pass
+        pid_path = os.getenv("MTV_PID_PATH")
+        with open(pid_path, "r") as f:
+            pid = f.read()
+        if pid:
+            subprocess.run(["kill", pid])
+
+        containers = subprocess.run(("docker", "ps", "-aq"))
+        if len(containers) != 0:
+            for container in containers:
+                subprocess.run(("docker", "stop", container))
+                subprocess.run(("docker", "rm", container))
+
+        subprocess.run(("sudo", "rm", "-rf", os.getenv("MTV_DB_PATH")))
+        subprocess.run(("sudo", "rm", "-rf", os.getenv("MTV_THUMBNAIL_PATH")))
+        subprocess.run(("sudo", "rm", "-rf", os.getenv("MTV_TVTHUMBNAIL_PATH")))
+        subprocess.run(("sudo", "rm", "-rf", os.getenv("MTV_PID_FILE")))
+
+        main.Main().main()
+        if utils.get_arch() == "32":
+            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch32/thumbnails/"])
+            subprocess.run(["docker", "build", "-t", "thumbnails32:latest", "."])
+            subprocess.run(["docker", "run", "-d", "-p", "9090:80", "thumbnails32:latest"])
+            
+            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch32/tvthumbnails/"])
+            subprocess.run(["docker", "build", "-t", "tvthumbnails32:latest", "."])
+            subprocess.run(["docker", "run", "-d", "-p", "9095:80", "tvthumbnails32:latest"])
+        elif utils.get_arch() == "64":
+            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch64/thumbnails/"])
+            subprocess.run(["docker", "build", "-t", "thumbnails64:latest", "."])
+            subprocess.run(["docker", "run", "-d", "-p", "9090:80", "thumbnails64:latest"])
+            
+            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch64/tvthumbnails/"])
+            subprocess.run(["docker", "build", "-t", "tvthumbnails64:latest", "."])
+            subprocess.run(["docker", "run", "-d", "-p", "9095:80", "tvthumbnails64:latest"])
+        host = os.getenv("MTV_RAW_ADDR")
+        port = os.getenv("MTV_SERVER_PORT")
+        uvicorn.run(app, host=host, port=int(port))
+
     elif args.delete: 
+        pid_path = os.getenv("MTV_PID_PATH")
+        with open(pid_path, "r") as f:
+            pid = f.read()
+        if pid:
+            subprocess.run(["kill", pid])
+
         containers = subprocess.run(("docker", "ps", "-aq"))
         for container in containers:
             subprocess.run(("docker", "stop", container))
             subprocess.run(("docker", "rm", container))
-        subprocess.run(("sudo", "rm", "-rf", "/usr/share/MTV"))
-
-
-    
+        subprocess.run(("sudo", "rm", "-rf", "/usr/share/MTV2"))
 
 if __name__ == "__main__":
     load_dotenv()

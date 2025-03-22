@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
-
+from dotenv import load_dotenv
 import mtvmovies
 import mtvtvshows
 import mtvimages
 import mtvtables
 import os
-from pprint import pprint
 import sqlite3
 import utils
-from dotenv import load_dotenv
 
 CWD = os.getcwd()
 
@@ -24,17 +22,17 @@ class Main:
         try:
             mtvtables.CreateTables().create_tables()
 
-            tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
-            mtvtvshows.ProcessTVShows(tvshows, self.conn, self.cursor).process()
+            movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
+            mtvmovies.ProcessMovies(movs, self.conn, self.cursor).process()
 
             images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
             mtvimages.ProcessImages(images, self.conn, self.cursor).process()
 
+            tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
+            mtvtvshows.ProcessTVShows(tvshows, self.conn, self.cursor).process()
+
             tvimages = utils.tvimg_walk_dirs(os.getenv("MTV_TVPOSTER_PATH"))
             mtvimages.ProcessTVImages(tvimages, self.conn, self.cursor).process()
-
-            movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
-            mtvmovies.ProcessMovies(movs, self.conn, self.cursor).process()
 
         except sqlite3.OperationalError as e:
             print(e)
