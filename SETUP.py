@@ -58,58 +58,49 @@ def setup():
         
         main.Main().main()
         if utils.get_arch() == "32":
-            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch32/thumbnails/"])
-            subprocess.run(["docker", "build", "-t", "thumbnails32:latest", "."])
+            subprocess.run([
+                "docker", 
+                "build", 
+                "-t", 
+                "thumbnails32:latest", 
+                "-f", 
+                "./arch32/thumbnails/Dockerfile", 
+                ".",
+            ])
             subprocess.run(["docker", "run", "-d", "-p", "9090:80", "thumbnails32:latest"])
-            # subprocess.run([
-            #     "docker",
-            #     "run",
-            #     "-d",
-            #     "-v",
-            #     "/usr/share/MTV22/thumbnails:/usr/share/nginx/html:ro",
-            #     "-p",
-            #     "9000:80",
-            #     "arm32v7/nginx:bookworm"
-            # ])
-            # subprocess.run([
-            #     "docker",
-            #     "run",
-            #     "-d",
-            #     "-v",
-            #     "/usr/share/MTV22/tvthumbnails:/usr/share/nginx/html:ro",
-            #     "-p",
-            #     "9090:80",
-            #     "arm32v7/nginx:bookworm"
-            # ])
-            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch32/tvthumbnails/"])
-            subprocess.run(["docker", "build", "-t", "tvthumbnails32:latest", "."])
+     
+            subprocess.run([
+                "docker", 
+                "build", 
+                "-t", 
+                "tvthumbnails32:latest", 
+                "-f", 
+                "./arch32/tvthumbnails/Dockerfile", 
+                ".",
+            ])
             subprocess.run(["docker", "run", "-d", "-p", "9095:80", "tvthumbnails32:latest"])
         elif utils.get_arch() == "64":
-            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch64/thumbnails/"])
-            subprocess.run(["docker", "build", "-t", "thumbnails64:latest", "."])
+            subprocess.run([
+                "docker", 
+                "build", 
+                "-t", 
+                "thumbnails64:latest", 
+                "-f", 
+                "./arch64/thumbnails/Dockerfile", 
+                ".",
+            ])
             subprocess.run(["docker", "run", "-d", "-p", "9090:80", "thumbnails64:latest"])
-            # subprocess.run([
-            #     "docker",
-            #     "run",
-            #     "-d",
-            #     "-v",
-            #     "/usr/share/MTV22/thumbnails:/usr/share/nginx/html:ro",
-            #     "-p",
-            #     "9000:80",
-            #     "nginx:bookworm"
-            # ])
-            # subprocess.run([
-            #     "docker",
-            #     "run",
-            #     "-d",
-            #     "-v",
-            #     "/usr/share/MTV22/tvthumbnails:/usr/share/nginx/html:ro",
-            #     "-p",
-            #     "9090:80",
-            #     "nginx:bookworm"
-            # ])
-            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch64/tvthumbnails/"])
-            subprocess.run(["docker", "build", "-t", "tvthumbnails64:latest", "."])
+
+            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/"])
+            subprocess.run([
+                "docker", 
+                "build", 
+                "-t", 
+                "tvthumbnails64:latest", 
+                "-f", 
+                "./arch64/tvthumbnails/Dockerfile", 
+                ".",
+            ])
             subprocess.run(["docker", "run", "-d", "-p", "9095:80", "tvthumbnails64:latest"])
         host = os.getenv("MTV_RAW_ADDR")
         port = os.getenv("MTV_SERVER_PORT")
