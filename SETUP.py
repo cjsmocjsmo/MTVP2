@@ -57,7 +57,7 @@ def setup():
             exit()
 
         main.Main().main()
-        os.chdir("/home/pimedia/MTV2/")
+        # os.chdir("/home/pimedia/MTV2/")
         if utils.get_arch() == "32":
             subprocess.run([
                 "docker", 
