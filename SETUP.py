@@ -95,22 +95,35 @@ def setup():
                 "run", 
                 "-d",
                 "-v",
-                "/usr/share/MTV2/tvthumbnails:/usr/share/nginx/html/",
+                "/usr/share/MTV2/thumbnails:/usr/share/nginx/html/",
                 "-p", 
-                "9090:80", 
+                "9090:80",
+                "--name",
+                "thumbnails64",
                 "thumbnails64:latest",
             ])
 
+            # subprocess.run([
+            #     "docker", 
+            #     "build", 
+            #     "-t", 
+            #     "tvthumbnails64:latest", 
+            #     "-f", 
+            #     "./arch64/tvthumbnails/Dockerfile", 
+            #     ".",
+            # ])
             subprocess.run([
                 "docker", 
-                "build", 
-                "-t", 
-                "tvthumbnails64:latest", 
-                "-f", 
-                "./arch64/tvthumbnails/Dockerfile", 
-                ".",
+                "run", 
+                "-d",
+                "-v",
+                "/usr/share/MTV2/tvthumbnails:/usr/share/nginx/html/",
+                "-p", 
+                "9095:80",
+                "--name",
+                "tvthumbnails64",
+                "tvthumbnails64:latest",
             ])
-            subprocess.run(["docker", "run", "-d", "-p", "9095:80", "tvthumbnails64:latest"])
         host = os.getenv("MTV_RAW_ADDR")
         port = os.getenv("MTV_SERVER_PORT")
         uvicorn.run(app, host=host, port=int(port))
