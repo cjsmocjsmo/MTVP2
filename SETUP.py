@@ -91,7 +91,6 @@ def setup():
             ])
             subprocess.run(["docker", "run", "-d", "-p", "9090:80", "thumbnails64:latest"])
 
-            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/"])
             subprocess.run([
                 "docker", 
                 "build", 

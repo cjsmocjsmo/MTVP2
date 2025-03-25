@@ -180,7 +180,7 @@ def monthly_amount_total(month):
     
     conn.close()
     
-    return total_amount
+    return month_txt
 
 # def img_walk_dirs(dir):
 #     jpglist = []
