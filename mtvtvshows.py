@@ -192,7 +192,7 @@ class ProcessTVShows:
         if match:
             start = match.start()
             new_start = start + 1
-            return tv[:new_start]
+            return tv[:new_start].rstrip()
         else:
             print("No match")
             print(tv)
