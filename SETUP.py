@@ -55,8 +55,9 @@ def setup():
             print("Python3 websockets is not installed. Install with:\n")
             print("\tsudo apt-get -y install python3-websockets")
             exit()
-        
+        subprocess.run(["source", "./bin/activate"])
         main.Main().main()
+        subprocess.run(["cd", "/home/pimedia/MTV2/"])
         if utils.get_arch() == "32":
             subprocess.run([
                 "docker", 

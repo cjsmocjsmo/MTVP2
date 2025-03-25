@@ -2,7 +2,7 @@
 FROM nginx:bookworm
 
 # Copy the thumbnails directory to the nginx html directory
-COPY /usr/share/MTV2/tvthumbnails /usr/share/nginx/html
+COPY /usr/share/MTV2/tvthumbnails/*.webp /usr/share/nginx/html/
 
 # Expose port 80
 EXPOSE 80
