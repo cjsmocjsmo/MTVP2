@@ -81,16 +81,25 @@ def setup():
             ])
             subprocess.run(["docker", "run", "-d", "-p", "9095:80", "tvthumbnails32:latest"])
         elif utils.get_arch() == "64":
+            # subprocess.run([
+            #     "docker", 
+            #     "build", 
+            #     "-t", 
+            #     "thumbnails64:latest", 
+            #     "-f", 
+            #     "./arch64/thumbnails/Dockerfile", 
+            #     ".",
+            # ])
             subprocess.run([
                 "docker", 
-                "build", 
-                "-t", 
-                "thumbnails64:latest", 
-                "-f", 
-                "./arch64/thumbnails/Dockerfile", 
-                ".",
+                "run", 
+                "-d",
+                "-v",
+                "/usr/share/MTV2/tvthumbnails:/usr/share/nginx/html/",
+                "-p", 
+                "9090:80", 
+                "thumbnails64:latest",
             ])
-            subprocess.run(["docker", "run", "-d", "-p", "9090:80", "thumbnails64:latest"])
 
             subprocess.run([
                 "docker", 
