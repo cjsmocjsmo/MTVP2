@@ -9,7 +9,10 @@ import utils
 import uvicorn
 from mtvfastapi import app
 
-# import docker
+import docker
+
+client = docker.from_env()
+
 
 CWD = os.getcwd()
 
@@ -57,7 +60,6 @@ def setup():
             exit()
 
         main.Main().main()
-        # os.chdir("/home/pimedia/MTV2/")
         if utils.get_arch() == "32":
             subprocess.run([
                 "docker", 
@@ -81,53 +83,49 @@ def setup():
             ])
             subprocess.run(["docker", "run", "-d", "-p", "9095:80", "tvthumbnails32:latest"])
         elif utils.get_arch() == "64":
+            client.containers.run(
+                "nginx:bookworm",
+                detach=True,
+                ports={"80/tcp": 9090},
+                volumes={"/usr/share/MTV2/thumbnails": {"bind": "/usr/share/nginx/html", "mode": "rw"}},
+                name="thumbnails64",
+            )
             # subprocess.run([
             #     "docker", 
-            #     "build", 
-            #     "-t", 
-            #     "thumbnails64:latest", 
-            #     "-f", 
-            #     "./arch64/thumbnails/Dockerfile", 
-            #     ".",
+            #     "run", 
+            #     "-d",
+            #     "-v",
+            #     "/usr/share/MTV2/thumbnails:/usr/share/nginx/html/",
+            #     "-p", 
+            #     "9090:80",
+            #     "--name",
+            #     "thumbnails64",
+            #     "nginx:bookworm",
             # ])
-            subprocess.run([
-                "docker", 
-                "run", 
-                "-d",
-                "-v",
-                "/usr/share/MTV2/thumbnails:/usr/share/nginx/html/",
-                "-p", 
-                "9090:80",
-                "--name",
-                "thumbnails64",
-                "nginx:bookworm",
-            ])
+
 
             # subprocess.run([
             #     "docker", 
-            #     "build", 
-            #     "-t", 
-            #     "tvthumbnails64:latest", 
-            #     "-f", 
-            #     "./arch64/tvthumbnails/Dockerfile", 
-            #     ".",
+            #     "run", 
+            #     "-d",
+            #     "-v",
+            #     "/usr/share/MTV2/tvthumbnails:/usr/share/nginx/html/",
+            #     "-p", 
+            #     "9095:80",
+            #     "--name",
+            #     "tvthumbnails64",
+            #     "nginx:bookworm",
             # ])
-            subprocess.run([
-                "docker", 
-                "run", 
-                "-d",
-                "-v",
-                "/usr/share/MTV2/tvthumbnails:/usr/share/nginx/html/",
-                "-p", 
-                "9095:80",
-                "--name",
-                "tvthumbnails64",
+            client.containers.run(
                 "nginx:bookworm",
-            ])
+                detach=True,
+                ports={"80/tcp": 9095},
+                volumes={"/usr/share/MTV2/tvthumbnails": {"bind": "/usr/share/nginx/html", "mode": "rw"}},
+                name="tvthumbnails64",
+            )
         host = os.getenv("MTV_RAW_ADDR")
         port = os.getenv("MTV_SERVER_PORT")
         uvicorn.run(app, host=host, port=int(port))
-        # asyncio.run(mtvserverasync.servermain())
         
     elif args.restart:
         pid_path = os.getenv("MTV_PID_PATH")
@@ -174,21 +172,85 @@ def setup():
 
         main.Main().main()
         if utils.get_arch() == "32":
-            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch32/thumbnails/"])
-            subprocess.run(["docker", "build", "-t", "thumbnails32:latest", "."])
-            subprocess.run(["docker", "run", "-d", "-p", "9090:80", "thumbnails32:latest"])
+            # subprocess.run([
+            #     "docker", 
+            #     "run", 
+            #     "-d", 
+            #     "-v",
+            #     "/usr/share/MTV2/thumbnails:/usr/share/nginx/html/",
+            #     "--name",
+            #     "thumbnails32",
+            #     "-p", 
+            #     "9090:80", 
+            #     "arm32v7/nginx:bookworm",
+            # ])
+            client.containers.run(
+                "arm32v7/nginx:bookworm",
+                detach=True,
+                ports={"80/tcp": 9090},
+                volumes={"/usr/share/MTV2/thumbnails": {"bind": "/usr/share/nginx/html", "mode": "rw"}},
+                name="thumbnails32",
+            )
             
-            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch32/tvthumbnails/"])
-            subprocess.run(["docker", "build", "-t", "tvthumbnails32:latest", "."])
-            subprocess.run(["docker", "run", "-d", "-p", "9095:80", "tvthumbnails32:latest"])
+            # subprocess.run([
+            #     "docker", 
+            #     "run", 
+            #     "-d",
+            #     "-v",
+            #     "/usr/share/MTV2/tvthumbnails:/usr/share/nginx/html/",
+            #     "--name",
+            #     "tvthumbnails32",
+            #     "-p", 
+            #     "9095:80", 
+            #     "arm32v7/nginx:bookworm",
+            # ])
+            client.containers.run(
+                "arm32v7/nginx:bookworm",
+                detach=True,
+                ports={"80/tcp": 9095},
+                volumes={"/usr/share/MTV2/tvthumbnails": {"bind": "/usr/share/nginx/html", "mode": "rw"}},
+                name="tvthumbnails32",
+            )
         elif utils.get_arch() == "64":
-            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch64/thumbnails/"])
-            subprocess.run(["docker", "build", "-t", "thumbnails64:latest", "."])
-            subprocess.run(["docker", "run", "-d", "-p", "9090:80", "thumbnails64:latest"])
+            # subprocess.run([
+            #     "docker", 
+            #     "run", 
+            #     "-d",
+            #     "-v",
+            #     "/usr/share/MTV2/thumbnails:/usr/share/nginx/html/",
+            #     "-p", 
+            #     "9090:80",
+            #     "--name",
+            #     "thumbnails64",
+            #     "nginx:bookworm",
+            # ])
+            client.containers.run(
+                "nginx:bookworm",
+                detach=True,
+                ports={"80/tcp": 9090},
+                volumes={"/usr/share/MTV2/thumbnails": {"bind": "/usr/share/nginx/html", "mode": "rw"}},
+                name="thumbnails64",
+            )
             
-            subprocess.run(["cd", "/home/whitepi/MTVP2/MTVP2/arch64/tvthumbnails/"])
-            subprocess.run(["docker", "build", "-t", "tvthumbnails64:latest", "."])
-            subprocess.run(["docker", "run", "-d", "-p", "9095:80", "tvthumbnails64:latest"])
+            # subprocess.run([
+            #     "docker", 
+            #     "run", 
+            #     "-d",
+            #     "-v",
+            #     "/usr/share/MTV2/tvthumbnails:/usr/share/nginx/html/",
+            #     "-p", 
+            #     "9095:80",
+            #     "--name",
+            #     "tvthumbnails64",
+            #     "nginx:bookworm",
+            # ])
+            client.containers.run(
+                "nginx:bookworm",
+                detach=True,
+                ports={"80/tcp": 9095},
+                volumes={"/usr/share/MTV2/tvthumbnails": {"bind": "/usr/share/nginx/html", "mode": "rw"}},
+                name="tvthumbnails64",
+            )
         host = os.getenv("MTV_RAW_ADDR")
         port = os.getenv("MTV_SERVER_PORT")
         uvicorn.run(app, host=host, port=int(port))
