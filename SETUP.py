@@ -100,7 +100,7 @@ def setup():
                 "9090:80",
                 "--name",
                 "thumbnails64",
-                "thumbnails64:latest",
+                "nginx:bookworm",
             ])
 
             # subprocess.run([
@@ -122,7 +122,7 @@ def setup():
                 "9095:80",
                 "--name",
                 "tvthumbnails64",
-                "tvthumbnails64:latest",
+                "nginx:bookworm",
             ])
         host = os.getenv("MTV_RAW_ADDR")
         port = os.getenv("MTV_SERVER_PORT")
