@@ -136,7 +136,7 @@ class ProcessTVImages(ProcessImages):
         fname = os.path.split(img)[1]
         server_addr = os.getenv("MTV_SERVER_ADDR")
         server_port = os.getenv("MTV_SERVER_PORT")
-        return f"{server_addr}:{server_port}/tvthumbnails/{fname}"
+        return f"{server_addr}:{server_port}/tvstatic/{fname}"
     
     def process(self):
         self.tvthumb_dir_check()
