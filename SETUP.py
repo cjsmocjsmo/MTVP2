@@ -55,7 +55,7 @@ def setup():
             exit()
 
         main.Main().main()
-        
+
         if utils.get_arch() == "32":
             subprocess.run([
                 "docker", 
@@ -79,30 +79,31 @@ def setup():
             ])
             subprocess.run(["docker", "run", "-d", "-p", "9095:80", "tvthumbnails32:latest"])
         elif utils.get_arch() == "64":
-            subprocess.run([
-                "docker", 
-                "run", 
-                "-d",
-                "-v",
-                "/usr/share/MTV2/thumbnails:/usr/share/nginx/html/",
-                "-p", 
-                "9090:80",
-                "--name",
-                "thumbnails64",
-                "nginx:bookworm",
-            ])
-            subprocess.run([
-                "docker", 
-                "run", 
-                "-d",
-                "-v",
-                "/usr/share/MTV2/tvthumbnails:/usr/share/nginx/html/",
-                "-p", 
-                "9095:80",
-                "--name",
-                "tvthumbnails64",
-                "nginx:bookworm",
-            ])
+            pass
+            # subprocess.run([
+            #     "docker", 
+            #     "run", 
+            #     "-d",
+            #     "-v",
+            #     "/usr/share/MTV2/thumbnails:/usr/share/nginx/html/",
+            #     "-p", 
+            #     "9090:80",
+            #     "--name",
+            #     "thumbnails64",
+            #     "nginx:bookworm",
+            # ])
+            # subprocess.run([
+            #     "docker", 
+            #     "run", 
+            #     "-d",
+            #     "-v",
+            #     "/usr/share/MTV2/tvthumbnails:/usr/share/nginx/html/",
+            #     "-p", 
+            #     "9095:80",
+            #     "--name",
+            #     "tvthumbnails64",
+            #     "nginx:bookworm",
+            # ])
         host = os.getenv("MTV_RAW_ADDR")
         port = os.getenv("MTV_SERVER_PORT")
         uvicorn.run(app, host=host, port=int(port))
