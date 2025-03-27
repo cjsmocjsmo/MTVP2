@@ -183,7 +183,7 @@ class ProcessMovies:
         server_addr = os.getenv("MTV_SERVER_ADDR")
         # server_port = os.getenv("MTV_SERVER_PORT")
         server_port = os.getenv("MTV_SERVER_PORT")
-        return f"{server_addr}:{server_port}/thumbnails/{fname}"
+        return f"{server_addr}:{server_port}/movstatic/{fname}"
     
     def get_name(self, mov):
         fname = os.path.split(mov)[1]
