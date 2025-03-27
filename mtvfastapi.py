@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 import mtvtables as MTVTABS
 import os
 from pydantic import BaseModel
@@ -16,6 +17,9 @@ instance = vlc.Instance()
 player = instance.media_player_new()
 
 app = FastAPI()
+
+app.mount("/movstatic", StaticFiles(directory="/usr/share/MTV2/thumbnails"), name="movstatic")
+app.mount("/tvstatic", StaticFiles(directory="/usr/share/MTV2/tvthumbnails"), name="tvstatic")
 
 app.add_middleware(
     CORSMiddleware,

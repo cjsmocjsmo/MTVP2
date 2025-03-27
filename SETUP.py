@@ -55,6 +55,7 @@ def setup():
             exit()
 
         main.Main().main()
+        
         if utils.get_arch() == "32":
             subprocess.run([
                 "docker", 
