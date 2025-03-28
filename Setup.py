@@ -90,11 +90,6 @@ def setup():
     elif args.restart:
         subprocess.run(['systemctl', 'restart', 'mtvfastapi'])
         print("Service restarted")
-        pass
-        # main.Main().main()
-        # host = os.getenv("MTV_RAW_ADDR")
-        # port = self.config["Server"]["MTV_SERVER_PORT"]
-        # uvicorn.run(app, host=host, port=int(port))
 
     elif args.update:
         pass
