@@ -7,7 +7,7 @@ from pprint import pprint
 import sqlite3
 
 class ProcessMovies:
-    def __init__(self, movs, conn, cursor):
+    def __init__(self, movs, conn, cursor, config):
         self.conn = conn
         self.cursor = cursor
         self.movlist = movs
@@ -58,6 +58,7 @@ class ProcessMovies:
         self.vandam = re.compile("VanDam")
         self.xmen = re.compile("XMen")
         self.crap = re.compile("\s\(")
+        self.config = config
         
 
     def get_year(self, mov):
@@ -180,9 +181,9 @@ class ProcessMovies:
 
     def get_http_thumb_path(self, mov):
         fname = os.path.split(mov)[1]
-        server_addr = os.getenv("MTV_SERVER_ADDR")
-        # server_port = os.getenv("MTV_SERVER_PORT")
-        server_port = os.getenv("MTV_SERVER_PORT")
+        server_addr = self.config['Server']['MTV_SERVER_ADDR']
+        # server_port = self.config["Server"]["MTV_SERVER_PORT"]
+        server_port = self.config["Server"]["MTV_SERVER_PORT"]
         return f"{server_addr}:{server_port}/movstatic/{fname}"
     
     def get_name(self, mov):

@@ -1997,6 +1997,6 @@ def wheeloftime2():
 if __name__ == "__main__":
     load_dotenv()
     host = os.getenv("MTV_RAW_ADDR")
-    port = os.getenv("MTV_SERVER_PORT")
+    port = self.config["Server"]["MTV_SERVER_PORT"]
     uvicorn.run(app, host=host, port=int(port))
     write_pid_file()

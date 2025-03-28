@@ -4,11 +4,12 @@ import os
 import sqlite3
 
 class CreateTables:
-    def __init__(self):
-        self.conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+    def __init__(self, config):
+        self.config = config
+        self.conn = sqlite3.connect(self.config['DBs']["MTV_DB_PATH"])
         self.cursor = self.conn.cursor()
 
-        self.conn2 = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))
+        self.conn2 = sqlite3.connect(self.config['DBs']["PROPANE_DB_PATH"])
         self.cursor2 = self.conn2.cursor()
 
     def create_tables(self):

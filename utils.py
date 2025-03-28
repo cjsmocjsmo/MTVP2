@@ -42,22 +42,22 @@ def tvimg_walk_dirs(dir):
                 webplist.append(fname)
     return webplist
 
-def movie_count():
-    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+def movie_count(config):
+    conn = sqlite3.connect(config['DBs']["MTV_DB_PATH"])
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM movies")
     count = cursor.fetchone()[0]
     return count
 
-def tvshow_count():
-    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))  
+def tvshow_count(config):
+    conn = sqlite3.connect(config['DBs']["MTV_DB_PATH"])  
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM tvshows")
     count = cursor.fetchone()[0]
     return count
 
-def movies_size_on_disk():
-    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))  
+def movies_size_on_disk(config):
+    conn = sqlite3.connect(config['DBs']["MTV_DB_PATH"])  
     cursor = conn.cursor()
 
     cursor.execute("SELECT Size FROM movies")
@@ -72,8 +72,8 @@ def movies_size_on_disk():
     total_movie_size_gb = round(total_movie_size_gb, 1)
     return total_movie_size_gb
 
-def tvshows_size_on_disk():
-    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))  
+def tvshows_size_on_disk(config):
+    conn = sqlite3.connect(config['DBs']["MTV_DB_PATH"])  
     cursor = conn.cursor()
 
     cursor.execute("SELECT Size FROM tvshows")
@@ -88,8 +88,8 @@ def tvshows_size_on_disk():
     total_tvshow_size_gb = round(total_tvshow_size_gb, 1)
     return total_tvshow_size_gb
 
-def propane_gallons_total():
-    conn = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))  
+def propane_gallons_total(config):
+    conn = sqlite3.connect(config['DBs']["PROPANE_DB_PATH"])  
     cursor = conn.cursor()
 
     cursor.execute("SELECT Gallons FROM gallons")
@@ -102,8 +102,8 @@ def propane_gallons_total():
     
     return total_gallons
 
-def propane_amount_total():
-    conn = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))  
+def propane_amount_total(config):
+    conn = sqlite3.connect(config['DBs']["PROPANE_DB_PATH"])  
     cursor = conn.cursor()
 
     cursor.execute("SELECT Amount FROM amount")
@@ -116,23 +116,23 @@ def propane_amount_total():
     
     return total_amount
 
-def insert_amount(amount):
+def insert_amount(amount, config):
     today_date = datetime.now().strftime("%m/%d/%Y")
     year = datetime.now().strftime("%Y")
     month = datetime.now().strftime("%m")
     day = datetime.now().strftime("%d")
-    conn = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))
+    conn = sqlite3.connect(config['DBs']['PROPANE_DB_PATH'])
     cursor = conn.cursor()
     cursor.execute("INSERT INTO amount (Year, Month, Day, Date, Amount) VALUES (?, ?, ?, ?, ?)", (year, month, day, today_date, amount,))
     conn.commit()
     conn.close()
 
-def insert_gallons(gallons):
+def insert_gallons(gallons, config):
     today_date = datetime.now().strftime("%m/%d/%Y")
     year = datetime.now().strftime("%Y")
     month = datetime.now().strftime("%m")
     day = datetime.now().strftime("%d")
-    conn = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))
+    conn = sqlite3.connect(config['DBs']['PROPANE_DB_PATH'])
     cursor = conn.cursor()
     cursor.execute("INSERT INTO gallons (Year, Month, Day, Date, Gallons) VALUES (?, ?, ?, ?, ?)", (year, month, day, today_date, gallons,))
     conn.commit()
@@ -166,8 +166,8 @@ def convert_month(month_int):
     else:
         return "Invalid month"
 
-def monthly_amount_total(month):
-    conn = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))  
+def monthly_amount_total(month, config):
+    conn = sqlite3.connect(config['DBs']['PROPANE_DB_PATH'])  
     cursor = conn.cursor()
 
     cursor.execute("SELECT Amount FROM amount WHERE Month = ?", (month))

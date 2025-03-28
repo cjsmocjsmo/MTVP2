@@ -9,20 +9,21 @@ import sqlite3
 from pprint import pprint
 
 class ProcessImages:
-    def __init__(self, imgs, conn, cursor):
+    def __init__(self, imgs, conn, cursor, config):
         self.conn = conn
         self.cursor = cursor
         self.imglist = imgs
         self.search = re.compile("\s\(")
+        self.config = config
 
     def thumb_dir_check(self):
-        img_dir = os.getenv("MTV_THUMBNAIL_PATH")
+        img_dir = self.config["Thumbnails"]["MTV_THUMBNAIL_PATH"]
         if not os.path.exists(img_dir):
             subprocess.run(["mkdir", img_dir])
             print(f"Created directory")
 
     def create_thumbnail(self, img):
-        thumb_dir = os.getenv("MTV_THUMBNAIL_PATH")
+        thumb_dir = self.config["Thumbnails"]["MTV_THUMBNAIL_PATH"]
         fname = os.path.split(img)[1]
         save_path = os.path.join(thumb_dir, fname)
 
@@ -48,14 +49,14 @@ class ProcessImages:
             print("No match")
 
     def get_thumb_path(self, img):
-        new_dir = os.getenv("MTV_THUMBNAIL_PATH")
+        new_dir = self.config["Thumbnails"]["MTV_THUMBNAIL_PATH"]
         fname = os.path.split(img)[1]
         return os.path.join(new_dir, fname)
 
     def get_http_thumb_path(self, img):
         fname = os.path.split(img)[1]
-        server_addr = os.getenv("MTV_SERVER_ADDR")
-        # server_port = os.getenv("MTV_SERVER_PORT")
+        server_addr = self.config['Server']['MTV_SERVER_ADDR']
+        # server_port = self.config["Server"]["MTV_SERVER_PORT"]
         server_port = "9000"
         return f"{server_addr}:{server_port}/{fname}"
     
@@ -95,20 +96,20 @@ class ProcessImages:
                 print(f"Error: {e}")
 
 class ProcessTVImages(ProcessImages):
-    def __init__(self, imgs, conn, cursor):
+    def __init__(self, imgs, conn, cursor, config):
         self.conn = conn
         self.cursor = cursor
         self.imglist = imgs
-        self.imglist = imgs
+        self.config = config
 
     def tvthumb_dir_check(self):
-        img_dir = os.getenv("MTV_TVTHUMBNAIL_PATH")
+        img_dir = self.config["Thumbnails"]["MTV_TVTHUMBNAIL_PATH"]
         if not os.path.exists(img_dir):
             subprocess.run(["mkdir", img_dir])
             print(f"Created directory")
 
     def create_thumbnail(self, img):
-        thumb_dir = os.getenv("MTV_TVTHUMBNAIL_PATH")
+        thumb_dir = self.config["Thumbnails"]["MTV_TVTHUMBNAIL_PATH"]
         fname = os.path.split(img)[1]
         save_path = os.path.join(thumb_dir, fname)
 
@@ -128,14 +129,14 @@ class ProcessTVImages(ProcessImages):
         return os.path.splitext(img)[0]
 
     def get_tvthumb_path(self, img):
-        new_dir = os.getenv("MTV_TVTHUMBNAIL_PATH")
+        new_dir = self.config["Thumbnails"]["MTV_TVTHUMBNAIL_PATH"]
         fname = os.path.split(img)[1]
         return os.path.join(new_dir, fname)
     
     def get_tvhttp_thumb_path(self, img):
         fname = os.path.split(img)[1]
-        server_addr = os.getenv("MTV_SERVER_ADDR")
-        server_port = os.getenv("MTV_SERVER_PORT")
+        server_addr = self.config['Server']['MTV_SERVER_ADDR']
+        server_port = self.config["Server"]["MTV_SERVER_PORT"]
         return f"{server_addr}:{server_port}/tvstatic/{fname}"
     
     def process(self):
