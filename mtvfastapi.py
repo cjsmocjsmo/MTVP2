@@ -52,11 +52,6 @@ class TVShow(BaseModel):
     Path: str
     Idx: str
 
-def write_pid_file():
-    pid = os.getpid()
-    with open(config['Misc']["MTV_PID_FILE"], "w") as f:
-        f.write(str(pid))
-
 def db_file_exists():
     return os.path.exists(config['DBs']['MTV_DB_PATH'])
 
@@ -70,15 +65,27 @@ def mov_db_content_check():
         return False
     return True
 
+def tvshows_db_content_check():
+    conn = sqlite3.connect(config['DBs']['MTV_DB_PATH'])
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM tvshows")
+    tvshows = cursor.fetchall()
+    conn.close()
+    if len(tvshows) == 0:
+        return False
+    return True
+
 @app.on_event("startup")
 def startup():
     if not db_file_exists():
-        print("DB file does not exist please run 'python3 SETUP.py -i'")
+        print("DB file does not exist please run 'python3 Setup.py -i'")
         exit(1)
     if not mov_db_content_check():
-        print("DB is empty. Please run 'python3 SETUP.py -i'")
+        print("DB is empty. Please run 'python3 Setup.py -i'")
         exit(1)
-    write_pid_file()
+    if not tvshows_db_content_check():
+        print("DB is empty. Please run 'python3 Setup.py -i'")
+        exit(1)
 
 def get_media_path_from_media_id(media_id):
     conn = sqlite3.connect(config['DBs']['MTV_DB_PATH'])
@@ -2000,4 +2007,3 @@ if __name__ == "__main__":
     host = config["Server"]["MTV_RAW_ADDR"]
     port = config["Server"]["MTV_SERVER_PORT"]
     uvicorn.run(app, host=host, port=int(port))
-    write_pid_file()
