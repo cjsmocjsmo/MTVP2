@@ -88,6 +88,8 @@ def setup():
         print("Service started")
         
     elif args.restart:
+        subprocess.run(['systemctl', 'restart', 'mtvfastapi'])
+        print("Service restarted")
         pass
         # main.Main().main()
         # host = os.getenv("MTV_RAW_ADDR")
