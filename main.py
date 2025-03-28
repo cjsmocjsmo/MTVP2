@@ -25,7 +25,7 @@ class Main:
             mtvmovies.ProcessMovies(movs, self.conn, self.cursor, self.config).process()
 
             images = utils.img_walk_dirs(self.config['Posters']["MTV_POSTER_PATH"])
-            mtvimages.ProcessImages(images, self.conn, self.cursor).process()
+            mtvimages.ProcessImages(images, self.conn, self.cursor, self.config).process()
 
             tvshows = utils.mtv_walk_dirs(self.config['Media']["MTV_TV_PATH"])
             mtvtvshows.ProcessTVShows(tvshows, self.conn, self.cursor).process()
