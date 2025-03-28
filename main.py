@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from dotenv import load_dotenv
+
 import mtvmovies
 import mtvtvshows
 import mtvimages
@@ -7,19 +7,14 @@ import mtvtables
 import os
 import sqlite3
 import utils
-import yaml
 
 CWD = os.getcwd()
 
 class Main:
     def __init__(self, config):
-        load_dotenv()
-        self.conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
-        self.cursor = self.conn.cursor()
         self.config = config
-        # with open('./config.yaml', 'r') as f:
-        #     self.config = yaml.safe_load(f)
-        
+        self.conn = sqlite3.connect(self.config['DBs']["MTV_DB_PATH"])
+        self.cursor = self.conn.cursor()        
 
     def main(self):
     
