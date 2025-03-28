@@ -28,10 +28,10 @@ class Main:
             mtvimages.ProcessImages(images, self.conn, self.cursor, self.config).process()
 
             tvshows = utils.mtv_walk_dirs(self.config['Media']["MTV_TV_PATH"])
-            mtvtvshows.ProcessTVShows(tvshows, self.conn, self.cursor).process()
+            mtvtvshows.ProcessTVShows(tvshows, self.conn, self.cursor, self.cinfig).process()
 
             tvimages = utils.tvimg_walk_dirs(self.config['Posters']["MTV_TVPOSTER_PATH"])
-            mtvimages.ProcessTVImages(tvimages, self.conn, self.cursor).process()
+            mtvimages.ProcessTVImages(tvimages, self.conn, self.cursor, self.config).process()
 
         except sqlite3.OperationalError as e:
             print(e)
