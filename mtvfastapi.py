@@ -77,13 +77,13 @@ def tvshows_db_content_check():
 
 @app.on_event("startup")
 def startup():
-    if not db_file_exists():
+    if db_file_exists() is False:
         print("DB file does not exist please run 'python3 Setup.py -i'")
         exit(1)
-    if not mov_db_content_check():
+    if mov_db_content_check() is False:
         print("DB is empty. Please run 'python3 Setup.py -i'")
         exit(1)
-    if not tvshows_db_content_check():
+    if tvshows_db_content_check() is False:
         print("DB is empty. Please run 'python3 Setup.py -i'")
         exit(1)
 
