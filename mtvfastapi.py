@@ -1997,7 +1997,6 @@ def wheeloftime2():
     return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
 
 if __name__ == "__main__":
-    load_dotenv()
     host = config["Server"]["MTV_RAW_ADDR"]
     port = config["Server"]["MTV_SERVER_PORT"]
     uvicorn.run(app, host=host, port=int(port))
