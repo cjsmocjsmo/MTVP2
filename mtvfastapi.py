@@ -1,16 +1,15 @@
-from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
+from typing import List
 import mtvtables as MTVTABS
 import os
-from pydantic import BaseModel
 import sqlite3
-from typing import List
+import yaml
 import uvicorn
 import vlc
 
-load_dotenv()
 
 # Initialize VLC player
 instance = vlc.Instance()
