@@ -1,0 +1,12 @@
+[Unit]
+Description=MTV FastAPI Service
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pimedia/MTV2/MTVP2
+ExecStart=/usr/bin/python3 /home/pimedia/MTV2/MTVP2/mtvfastapi.py
+Restart=always
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

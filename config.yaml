@@ -1,5 +1,6 @@
 Paths:
-  MTV_PROG_PATH: "/home/pimedia/MTV2"
+  MTV_VENV_PATH: "/home/pimedia/MTV2"
+  MTV_PROG_PATH: "/home/pimedia/MTV2/MTVP2"
 
 Media:
   MTV_MOVIES_PATH: "/home/pimedia/PINAS/MTV/Movies/"

@@ -5,9 +5,11 @@ import argparse
 import main
 import os
 import utils
-import uvicorn
+# import uvicorn
 import yaml
 import sqlite3
+import shutil
+import subprocess
 
 with open('./config.yaml', 'r') as f:
     config = yaml.safe_load(f)
@@ -76,9 +78,14 @@ def setup():
 
         main.Main(config).main()
 
-        host = config["Server"]["MTV_RAW_ADDR"]
-        port = config["Server"]["MTV_SERVER_PORT"]
-        uvicorn.run(app, host=host, port=int(port))
+        if not os.path.exists('/etc/systemd/system/mtvfastapi.service'):
+            shutil.copyfile('./mtvfastapi.service', '/etc/systemd/system/mtvfastapi.service')
+            print("Service file copied")
+
+        subprocess.run(['systemctl', 'daemon-reload'])
+        subprocess.run(['systemctl', 'enable', 'mtvfastapi'])
+        subprocess.run(['systemctl', 'start', 'mtvfastapi'])
+        print("Service started")
         
     elif args.restart:
         pass
@@ -93,9 +100,16 @@ def setup():
         # port = self.config["Server"]["MTV_SERVER_PORT"]
         # uvicorn.run(app, host=host, port=int(port))
 
-    elif args.delete: 
-        pass
-        
+    elif args.delete:
+        subprocess.run(['systemctl', 'stop', 'mtvfastapi'])
+        subprocess.run(['systemctl', 'disable', 'mtvfastapi'])
+        subprocess.run(['systemctl', 'daemon-reload'])
+        os.remove('/etc/systemd/system/mtvfastapi.service')
+        os.remove(config['DBs']['MTV_DB_PATH'])
+        shutil.rmtree(config['Thumbnails']['MTV_THUMBNAIL_PATH'])
+        shutil.rmtree(config['Thumbnails']['MTV_TVTHUMBNAIL_PATH'])
+        shutil.rmtree(config['Paths']['MTV_PROG_PATH'])
+        print("Service stopped and removed")
 
 if __name__ == "__main__":
     setup()
