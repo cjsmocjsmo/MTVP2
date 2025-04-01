@@ -111,9 +111,10 @@ def read_root():
 def set_media(media_id: str):
     print(media_id)
     media_path = get_media_path_from_media_id(media_id)
+    print(media_path)
     player.set_media(vlc.Media(media_path))
     player.set_fullscreen(True)
-    return {media_path}
+    return media_path
 
 @app.get("/player_set_tv_media/{tvmediaid}")
 def set_tv_media(tvmediaid: str):
