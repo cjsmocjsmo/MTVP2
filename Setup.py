@@ -79,8 +79,8 @@ def setup():
         main.Main(config).main()
 
         if not os.path.exists('/etc/systemd/system/mtvfastapi.service'):
-            shutil.copyfile('./mtvfastapi.service', '/etc/systemd/system/mtvfastapi.service')
-            print("Service file copied")
+            print("no service file found move it over dumbass")
+            exit(1)
 
         subprocess.run(['systemctl', 'daemon-reload'])
         subprocess.run(['systemctl', 'enable', 'mtvfastapi'])

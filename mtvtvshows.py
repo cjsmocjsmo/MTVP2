@@ -14,30 +14,43 @@ class ProcessTVShows:
         self.conn = conn
         self.cursor = cursor
         self.tvlist = tvshows
-        self.alteredcarbon = re.compile("AlteredCarbon")
-        self.forallmankind = re.compile("ForAllManKind")
-        self.foundation = re.compile("Foundation")
-        self.fuubar = re.compile("FuuBar")
-        self.hford1923 = re.compile("HFord1923")
-        self.halo = re.compile("Halo")
-        self.houseofthedragon = re.compile("HouseOfTheDragon")
-        self.lostinspace = re.compile("LostInSpace")
-        self.mastersoftheuniverse = re.compile("MastersOfTheUniverse")
-        self.mobland = re.compile("MobLand")
-        self.monarchlegacyofmonsters = re.compile("MonarchLegacyOfMonsters")
-        self.nightsky = re.compile("NightSky")
-        self.orville = re.compile("Orville")
-        self.prehistoricplanet = re.compile("PrehistoricPlanet")
-        self.raisedbywolves = re.compile("RaisedByWolves")
-        self.shogun = re.compile("Shogun")
-        self.silo = re.compile("Silo")
-        self.columbia = re.compile("Columbia")
-        self.cowboybebop = re.compile("CowboyBebop")
-        self.fallout = re.compile("Fallout")
+
+        #Action
         self.thecontinental = re.compile("TheContinental")
-        self.thelastofus = re.compile("TheLastOfUs")
+        self.shogun = re.compile("Shogun")
+        self.mobland = re.compile("MobLand")
+        #Comedy
+        self.fuubar = re.compile("FuuBar")
+        #Fantasy
+        self.houseofthedragon = re.compile("HouseOfTheDragon")
         self.thelordoftheringstheringsofpower = re.compile("TheLordOfTheRingsTheRingsOfPower")
         self.wheeloftime = re.compile("WheelOfTime")
+        #MCU
+        self.secretinvasion = re.compile("SecretInvasion")
+        self.iamgroot = re.compile("IAmGroot")
+        self.loki = re.compile("Loki")
+        self.moonknight = re.compile("MoonKnight")
+        self.shehulk = re.compile("SheHulk")
+        self.hawkeye = re.compile("Hawkeye")
+        self.falconwintersoldier = re.compile("FalconWinterSoldier")
+        self.wandavision = re.compile("WandaVision")
+        #Science
+        self.prehistoricplanet = re.compile("PrehistoricPlanet")
+        #SciFi
+        self.fallout = re.compile("Fallout")
+        self.silo = re.compile("Silo")
+        self.thelastofus = re.compile("TheLastOfUs")
+        self.orville = re.compile("Orville")
+        self.halo = re.compile("Halo")
+        self.forallmankind = re.compile("ForAllManKind")
+        self.monarchlegacyofmonsters = re.compile("MonarchLegacyOfMonsters")
+        self.foundation = re.compile("Foundation")
+        self.alteredcarbon = re.compile("AlteredCarbon")
+        self.cowboybebop = re.compile("CowboyBebop")
+        self.lostinspace = re.compile("LostInSpace")
+        self.raisedbywolves = re.compile("RaisedByWolves")
+        self.nightsky = re.compile("NightSky")
+        #StarTrek
         self.discovery = re.compile("Discovery")
         self.enterprise = re.compile("Enterprise")
         self.lowerdecks = re.compile("LowerDecks")
@@ -47,6 +60,7 @@ class ProcessTVShows:
         self.strangenewworlds = re.compile("StrangeNewWorlds")
         self.tng = re.compile("TNG")
         self.voyager = re.compile("Voyager")
+        #StarWars
         self.acolyte = re.compile("Acolyte")
         self.andor = re.compile("Andor")
         self.mandalorian = re.compile("Mandalorian")
@@ -57,17 +71,15 @@ class ProcessTVShows:
         self.obiwankenobi = re.compile("ObiWanKenobi")
         self.talesofthejedi = re.compile("TalesOfTheJedi")
         self.visions = re.compile("Visions")
-        self.falconwintersoldier = re.compile("FalconWinterSoldier")
-        self.iamgroot = re.compile("IAmGroot")
-        self.moonknight = re.compile("MoonKnight")
-        self.shehulk = re.compile("SheHulk")
-        self.hawkeye = re.compile("Hawkeye")
-        self.loki = re.compile("Loki")
-        self.secretinvasion = re.compile("SecretInvasion")
-        self.wandavision = re.compile("WandaVision")
         self.skeletoncrew = re.compile("SkeletonCrew")
+        #Westerns
+        self.hford1923 = re.compile("HFord1923")
+
         self.episea = re.compile("\sS\d{2}E\d{2}\s")
 
+        # self.mastersoftheuniverse = re.compile("MastersOfTheUniverse")
+        # self.columbia = re.compile("Columbia")
+        
     def get_tvid(self, tv):
         encoded_string = tv.encode('utf-8')
         md5_hash = hashlib.md5()

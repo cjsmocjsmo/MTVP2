@@ -172,14 +172,11 @@ def monthly_amount_total(month, config):
 
     cursor.execute("SELECT Amount FROM amount WHERE Month = ?", (month))
     amounts = cursor.fetchall()
+    conn.close()
     
     amounts_list = [float(amount[0]) for amount in amounts]
     monthly_total_amount = sum(amounts_list)
- 
     month_txt = convert_month(int(month))
-    
-    conn.close()
-    
     return month_txt
 
 # def img_walk_dirs(dir):
