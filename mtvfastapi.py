@@ -2004,6 +2004,19 @@ def wheeloftime2():
     
     return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
 
+@app.get("/mobland", response_model=List[TVShow])
+def mobland():
+    conn = sqlite3.connect(config['DBs']['MTV_DB_PATH'])
+    cursor = conn.cursor()
+    cursor.execute("SELECT TvId, Size, Catagory, Name, Season, Episode, Path, Idx FROM tvshows WHERE Catagory='MobLand' AND Season='01' ORDER BY Season DESC, Episode DESC")
+    tvshows = cursor.fetchall()
+    conn.close()
+
+    if not tvshows:
+        raise HTTPException(status_code=404, detail="No Mob Land episodes found")
+    
+    return [TVShow(TvId=tvshow[0], Size=tvshow[1], Catagory=tvshow[2], Name=tvshow[3], Season=tvshow[4], Episode=tvshow[5], Path=tvshow[6], Idx=tvshow[7]) for tvshow in tvshows]
+
 if __name__ == "__main__":
     host = config["Server"]["MTV_RAW_ADDR"]
     port = config["Server"]["MTV_SERVER_PORT"]
