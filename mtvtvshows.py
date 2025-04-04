@@ -77,8 +77,8 @@ class ProcessTVShows:
 
         self.episea = re.compile("\sS\d{2}E\d{2}\s")
 
-        # self.mastersoftheuniverse = re.compile("MastersOfTheUniverse")
-        # self.columbia = re.compile("Columbia")
+        self.mastersoftheuniverse = re.compile("MastersOfTheUniverse")
+        self.columbia = re.compile("Columbia")
         
     def get_tvid(self, tv):
         encoded_string = tv.encode('utf-8')
@@ -104,8 +104,8 @@ class ProcessTVShows:
             catagory = "HouseOfTheDragon"
         elif re.search(self.lostinspace, tv):
             catagory = "LostInSpace"
-        # elif re.search(self.mastersoftheuniverse, tv):
-        #     catagory = "MastersOfTheUniverse"
+        elif re.search(self.mastersoftheuniverse, tv):
+            catagory = "MastersOfTheUniverse"
         elif re.search(self.mobland, tv):
             catagory = "MobLand"
         elif re.search(self.monarchlegacyofmonsters, tv):
