@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from mtvfastapi import app
+import update
 import argparse
 import main
 import os
@@ -92,10 +93,11 @@ def setup():
         print("Service restarted")
 
     elif args.update:
-        pass
-        # host = os.getenv("MTV_RAW_ADDR")
-        # port = self.config["Server"]["MTV_SERVER_PORT"]
-        # uvicorn.run(app, host=host, port=int(port))
+        subprocess.run(['systemctl', 'stop', 'mtvfastapi'])
+        update.UpdateMain(config).main()
+        subprocess.run(['systemctl', 'daemon-reload'])
+        subprocess.run(['systemctl', 'start', 'mtvfastapi'])
+        print("Service updated and started")
 
     elif args.delete:
         subprocess.run(['systemctl', 'stop', 'mtvfastapi'])
