@@ -32,6 +32,29 @@ def img_walk_dirs(dir):
                 jpglist.append(fname)
     return jpglist
 
+def compare_lists(db_list, file_list):
+    db_set = set(db_list)
+    file_set = set(file_list)
+    extra_items = file_set - db_set
+    return extra_items
+
+def get_mov_paths_from_db(config):
+    conn = sqlite3.connect(config['DBs']["MTV_DB_PATH"])
+    cursor = conn.cursor()
+    cursor.execute("SELECT Path FROM movies")
+    db_list = [row[0] for row in cursor.fetchall()]
+    conn.close()
+    return db_list
+
+def get_tv_paths_from_db(config):
+    conn = sqlite3.connect(config['DBs']["MTV_DB_PATH"])
+    cursor = conn.cursor()
+    cursor.execute("SELECT Path FROM tvshows")
+    db_list = [row[0] for row in cursor.fetchall()]
+    conn.close()
+    return db_list
+
+
 def tvimg_walk_dirs(dir):
     webplist = []
     for root, dirs, files in os.walk(dir):
