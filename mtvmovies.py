@@ -162,7 +162,7 @@ class ProcessMovies:
             catagory = "StarTrek"
         elif re.search(self.starwars, mov):
             catagory = "StarWars"
-        elif re.search(self.stoogies, mov):
+        elif re.search(self.stooges, mov):
             catagory = "Stooges"
         elif re.search(self.super_heros, mov):
             catagory = "SuperHeros"
