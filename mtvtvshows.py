@@ -104,8 +104,8 @@ class ProcessTVShows:
             catagory = "HouseOfTheDragon"
         elif re.search(self.lostinspace, tv):
             catagory = "LostInSpace"
-        elif re.search(self.mastersoftheuniverse, tv):
-            catagory = "MastersOfTheUniverse"
+        # elif re.search(self.mastersoftheuniverse, tv):
+        #     catagory = "MastersOfTheUniverse"
         elif re.search(self.mobland, tv):
             catagory = "MobLand"
         elif re.search(self.monarchlegacyofmonsters, tv):
