@@ -86,7 +86,7 @@ def setup():
         # subprocess.run(['systemctl', 'daemon-reload'])
         # subprocess.run(['systemctl', 'enable', 'mtvfastapi'])
         # subprocess.run(['systemctl', 'start', 'mtvfastapi'])
-        uvicorn.run(app, host=config['Server']['MTV_SERVER_ADDR'], port=config['Server']['MTV_SERVER_PORT'], log_level="info", workers=1)
+        uvicorn.run(app, host=config['Server']['MTV_RAW_ADDR'], port=config['Server']['MTV_SERVER_PORT'], log_level="info", workers=1)
         print("Service started")
         
     elif args.restart:
