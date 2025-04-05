@@ -6,7 +6,7 @@ import argparse
 import main
 import os
 import utils
-# import uvicorn
+import uvicorn
 import yaml
 import sqlite3
 import shutil
@@ -79,13 +79,14 @@ def setup():
 
         main.Main(config).main()
 
-        if not os.path.exists('/etc/systemd/system/mtvfastapi.service'):
-            print("no service file found move it over dumbass")
-            exit(1)
+        # if not os.path.exists('/etc/systemd/system/mtvfastapi.service'):
+        #     print("no service file found move it over dumbass")
+        #     exit(1)
 
-        subprocess.run(['systemctl', 'daemon-reload'])
-        subprocess.run(['systemctl', 'enable', 'mtvfastapi'])
-        subprocess.run(['systemctl', 'start', 'mtvfastapi'])
+        # subprocess.run(['systemctl', 'daemon-reload'])
+        # subprocess.run(['systemctl', 'enable', 'mtvfastapi'])
+        # subprocess.run(['systemctl', 'start', 'mtvfastapi'])
+        # uvicorn.run(app, host=config['Server']['MTV_SERVER_ADDR'], port=config['Server']['MTV_SERVER_PORT'], log_level="info", workers=1)
         print("Service started")
         
     elif args.restart:
