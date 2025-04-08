@@ -281,6 +281,19 @@ def comedy():
     
     return [Movie(Name=movie[0], Year=movie[1], PosterAddr=movie[2], Size=movie[3], Path=movie[4], Idx=movie[5], MovId=movie[6], Catagory=movie[7], HttpThumbPath=movie[8]) for movie in movies]
 
+@app.get("/cheechandchong", response_model=List[Movie])
+def cheechandchong():
+    conn = sqlite3.connect(config['DBs']['MTV_DB_PATH'])
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Catagory='CheechAndChong' ORDER BY Year DESC")
+    movies = cursor.fetchall()
+    conn.close()
+
+    if not movies:
+        raise HTTPException(status_code=404, detail="No comedy movies found")
+
+    return [Movie(Name=movie[0], Year=movie[1], PosterAddr=movie[2], Size=movie[3], Path=movie[4], Idx=movie[5], MovId=movie[6], Catagory=movie[7], HttpThumbPath=movie[8]) for movie in movies]
+
 @app.get("/chucknorris", response_model=List[Movie])
 def chucknorris():
     conn = sqlite3.connect(config['DBs']['MTV_DB_PATH'])

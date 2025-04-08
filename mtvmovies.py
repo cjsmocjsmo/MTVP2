@@ -19,6 +19,7 @@ class ProcessMovies:
         self.buzz = re.compile("Buzz")
         self.cartoons = re.compile("Cartoons")
         self.charlie_brown = re.compile("CharlieBrown")
+        self.cheechandchong = re.compile("CheechAndChong")
         self.chuck_norris = re.compile("ChuckNorris")
         self.comedy = re.compile("Comedy")
         self.documentary = re.compile("Documentary")
@@ -61,7 +62,6 @@ class ProcessMovies:
         self.crap = re.compile("\s\(")
         self.config = config
         
-
     def get_year(self, mov):
         searchstr1 = re.compile("\(")
         searchstr2 = re.compile("\)")
@@ -102,6 +102,8 @@ class ProcessMovies:
             catagory = "Cartoons"
         elif re.search(self.charlie_brown, mov):
             catagory = "CharlieBrown"
+        elif re.search(self.cheechandchong, mov):
+            catagory = "CheechAndChong"
         elif re.search(self.chuck_norris, mov):
             catagory = "ChuckNorris"
         elif re.search(self.comedy, mov):
